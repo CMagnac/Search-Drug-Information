@@ -1,44 +1,66 @@
 # Drug Information Search Using WHO Stems
 
-This project provides a Python-based tool to identify pharmacological properties of drugs using WHO International Nonproprietary Name (INN) stems.
+A **Python web application** that analyzes drug **International Nonproprietary Names** (INN) using the stem classification system defined by the [World Health Organization](https://www.who.int/teams/health-product-and-policy-standards/inn) and retrieves pharmacological information from [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
-The World Health Organization (WHO) maintains a list of common stems used in INNs to indicate pharmacological classification. This application leverages that classification system and enriches it with additional pharmacological data retrieved from PubChem.
+The application identifies pharmacological classes based on **WHO INN stems**, then **queries PubChem** to display detailed drug information through a **web interface built with Streamlit**.
 
-## Project Overview
+## Overview
 
-1. Given a drug's International Nonproprietary Name (INN), the application:
-2. Extracts and matches its WHO stem using a local JSON database (WHO 2024 Common Stems List).
-3. Determines the pharmacological classification based on the stem.
-4. Queries the PubChem API to retrieve detailed pharmacological information.
-5. Stores the collected data in a local SQL database.
-6. Uses an AI agent to translate English pharmacological descriptions into French.
+The International Nonproprietary Name (INN) system maintained by the World Health Organization assigns standardized names to pharmaceutical substances. Many of these names contain common stems that indicate the drug's pharmacological class.
+
+This project uses those stems to:
+
+1. Detect pharmacological classification from a drug's INN.
+2. Retrieve additional molecular and pharmacological information from PubChem.
+3. Present the results through a simple local web interface.
+
+## How It Works
+
+Given a drug's INN, the application performs the following steps:
+
+1. Stem Identification
+The drug name is analyzed and matched against WHO stem definitions stored in a local JSON database.
+2. Pharmacological Classification
+If a stem is detected, the corresponding pharmacological class is identified.
+3. PubChem Query
+The application queries the [PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest) to retrieve chemical and pharmacological data.
+4. Data Visualization
+Results are displayed through a Streamlit web interface running locally.
 
 ## Features
 
-* WHO stem recognition from INN names
-* Pharmacological classification lookup
-* Integration with PubChem API
-* Structured data storage in SQL database
-* Automated English-to-French translation using AI
-* Web framework support (Flask or Django)
+* WHO INN stem recognition
+* Automatic pharmacological classification
+* Integration with the PubChem REST API
+* Interactive local web interface
+* Lightweight JSON-based stem database
 
 ## Technologies Used
 
-* Python
-* Flask or Django
-* JSON (WHO stems database)
-* PubChem API
-* OpenAI API
-* SQL database (e.g., SQLite or PostgreSQL)
+* Python 3.13.1
+* Streamlit
+* Requests
+* JSON database
+* PubChem REST API
 
 ## Data Sources
 
-* WHO 2024 List of Common Stems (INN classification)
-* PubChem REST API
+* [WHO List of Common Stems (2024)](https://www.who.int/publications/i/item/9789240099388)
+Provided by the World Health Organization INN programme.
 
-## Potential Use Cases
+* [PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest-tutorial)
+Chemical and pharmacological data provided by National Center for Biotechnology Information.
 
-* Educational pharmacology tools
-* Drug classification systems
-* Research data enrichment
-* Multilingual pharmacological databases
+## Installation and Usage
+
+1️⃣ Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+2️⃣ Run the application
+
+```bash
+streamlit run app.py
+```
