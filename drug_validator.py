@@ -1,3 +1,16 @@
+"""
+Drug name validation using WHO INN stems.
+
+This module provides utilities to:
+- load a WHO stem database from JSON
+- analyze drug names to detect stem patterns
+- return structured validation results.
+
+Main classes:
+- StemDatabase: loads and stores stem definitions
+- StemAnalyzer: performs stem detection
+- DrugNameValidator: orchestrates validation workflow
+"""
 import json
 from pathlib import Path
 from typing import List, Dict
@@ -13,6 +26,10 @@ class StemDatabase:
         self._stems = self._load_stems()
 
     def _load_stems(self) -> Dict[str, str]:
+        """
+        Load stems from the JSON database and flatten them
+        into a single dictionary.
+        """
         with open(self.json_path, "r", encoding="utf-8") as file:
             raw_data = json.load(file)
 
@@ -23,6 +40,9 @@ class StemDatabase:
         return stems
 
     def get_all_stems(self) -> Dict[str, str]:
+        """
+        Return the complete dictionary of stems and descriptions.
+        """
         return self._stems
 
 
@@ -48,7 +68,9 @@ class StemAnalyzer:
         self.stem_database = stem_database
 
     def analyze(self, drug_name: str) -> List[StemMatch]:
-
+        """
+        Analyze a drug name and return matching WHO stems.
+        """
         drug_name = drug_name.lower()
         matches = []
 
@@ -86,6 +108,9 @@ class DrugValidationResult:
         return len(self.matches) > 0
 
     def to_dict(self):
+        """
+        Convert the validation result to a dictionary format.
+        """
         return {
             "drug": self.drug_name,
             "valid": self.is_valid,
@@ -106,5 +131,8 @@ class DrugNameValidator:
         self.analyzer = StemAnalyzer(self.database)
 
     def validate(self, drug_name: str) -> DrugValidationResult:
+        """
+        Validate a drug name against the WHO stem database.
+        """
         matches = self.analyzer.analyze(drug_name)
         return DrugValidationResult(drug_name, matches)

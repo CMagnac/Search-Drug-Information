@@ -1,3 +1,19 @@
+"""
+Drug INN Analyzer web application.
+
+This Streamlit app provides an interface to analyze drug
+International Nonproprietary Names (INN). It performs:
+
+1. WHO stem validation using a local stem database.
+2. Pharmacology data retrieval from PubChem.
+
+Dependencies:
+    - DrugNameValidator: validates INN stems.
+    - PubChemClient: retrieves pharmacology sections from PubChem.
+
+The interface allows users to enter a drug name and view
+stem classification and pharmacological information.
+"""
 import streamlit as st
 
 from drug_validator import DrugNameValidator
