@@ -18,14 +18,10 @@ This project uses those stems to:
 
 Given a drug's INN, the application performs the following steps:
 
-1. Stem Identification
-The drug name is analyzed and matched against WHO stem definitions stored in a local JSON database.
-2. Pharmacological Classification
-If a stem is detected, the corresponding pharmacological class is identified.
-3. PubChem Query
-The application queries the [PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest) to retrieve chemical and pharmacological data.
-4. Data Visualization
-Results are displayed through a Streamlit web interface running locally.
+1. **Stem Identification** : the drug name is analyzed and matched against WHO stem definitions stored in a local JSON database.
+2. **Pharmacological Classification** : if a stem is detected, the corresponding pharmacological class is identified.
+3. **PubChem Query** : the application queries the [PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest) to retrieve chemical and pharmacological data.
+4. **Data Visualization** : results are displayed through a Streamlit web interface running locally.
 
 ## Features
 
@@ -38,8 +34,8 @@ Results are displayed through a Streamlit web interface running locally.
 ## Technologies Used
 
 * Python 3.13.1
-* Streamlit
-* Requests
+* Streamlit 1.55.0
+* Requests 2.32.5
 * JSON database
 * PubChem REST API
 
@@ -64,3 +60,7 @@ pip install -r requirements.txt
 ```bash
 streamlit run app.py
 ```
+
+## Demo
+
+![app](Img/demo.png)
