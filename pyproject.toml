@@ -1,0 +1,10 @@
+[project]
+name = "inn-analyzer"
+version = "0.1.0"
+dependencies = [
+    "streamlit",
+    "requests",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
