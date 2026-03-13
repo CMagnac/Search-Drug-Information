@@ -1,12 +1,12 @@
 # Drug Information Search Using WHO Stems
 
-A **Python web application** that analyzes drug **International Nonproprietary Names** (INN) using the stem classification system defined by the [World Health Organization](https://www.who.int/teams/health-product-and-policy-standards/inn) and retrieves pharmacological information from [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
+A **Python web application** that analyzes drug **International Nonproprietary Names** (INN) using the stem classification system defined by the [World Health Organization](https://www.who.int/teams/health-product-and-policy-standards/inn)(WHO) and retrieves pharmacological information from [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
 The application identifies pharmacological classes based on **WHO INN stems**, then **queries PubChem** to display detailed drug information through a **web interface built with Streamlit**.
 
 ## Overview
 
-The International Nonproprietary Name (INN) system maintained by the World Health Organization assigns standardized names to pharmaceutical substances. Many of these names contain common stems that indicate the drug's pharmacological class.
+The INN system maintained by the WHO assigns standardized names to pharmaceutical substances. Many of these names contain common stems that indicate the drug's pharmacological class.
 
 This project uses those stems to:
 
@@ -46,6 +46,9 @@ Provided by the World Health Organization INN programme.
 
 * [PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest-tutorial)
 Chemical and pharmacological data provided by National Center for Biotechnology Information.
+
+* [World Customs Organization INN Table](https://www.wcoomd.org/en/topics/nomenclature/instrument-and-tools/tools-to-assist-with-the-classification-in-the-hs/hs_classification-decisions/inn-table.aspx?p=1)
+The INN Table is an Excel spreadsheet that contains the HS classification of INNs decided by the **Harmonized System Committee** (HSC). Provided by the World Customs Organization.
 
 ## Installation and Usage
 

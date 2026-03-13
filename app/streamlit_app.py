@@ -16,14 +16,14 @@ stem classification and pharmacological information.
 """
 import streamlit as st
 
-from drug_validator import DrugNameValidator
-from pubchem_service import PubChemClient
+from inn_analyzer.drug_validator import DrugNameValidator
+from inn_analyzer.pubchem_service import PubChemClient
 
-
-validator = DrugNameValidator("./DATAS/common-stems.json")
+# Initialize services
+validator = DrugNameValidator("./data/common-stems.json")
 pubchem = PubChemClient()
 
-
+# Streamlit configuration
 st.set_page_config(
     page_title="Drug INN Analyzer",
     layout="wide"
@@ -35,12 +35,12 @@ st.write(
     "Validate WHO INN stems and retrieve pharmacology information from PubChem."
 )
 
-
+# Creates an input box with default value amoxicillin.
 drug_name = st.text_input("Enter drug INN", "amoxicillin")
 
-
+# Main action : the analysis runs only when the button is pressed.
 if st.button("Analyze"):
-
+    # Prevents empty input.
     if drug_name.strip() == "":
         st.warning("Please enter a drug name.")
 
@@ -68,7 +68,7 @@ if st.button("Analyze"):
 
 
         try:
-
+            # PubChem retrieval
             data = pubchem.get_pharmacology(drug_name)
 
             st.write(f"PubChem CID: **{data['cid']}**")
