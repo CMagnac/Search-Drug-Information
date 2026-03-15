@@ -36,6 +36,7 @@ Given a drug's INN, the application performs the following steps:
 * Python 3.13.1
 * Streamlit 1.55.0
 * Requests 2.32.5
+* pytest 9.0.2
 * JSON database
 * PubChem REST API
 
@@ -52,17 +53,41 @@ The INN Table is an Excel spreadsheet that contains the HS classification of INN
 
 ## Installation and Usage
 
-1️⃣ Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-2️⃣ Run the application
-
 ```bash
 streamlit run app.py
+git clone https://github.com/CMagnac/Search-Drug-Information.git
+cd Search-Drug-Information
+python -m venv env
+venv\Scripts\activate  # On Windows
+pip install -r requirements.txt
+pip install -e .
+streamlit run app/streamlit_app.py
 ```
+
+## Testing with Pytest
+
+This project uses pytest to validate the core components of the INN analyzer.
+
+The goal of the test is to ensure that :
+
+* WHO stem detection works correctly.
+* The PubChem client behave as expected.
+
+### Running the tests
+
+Run the full test with :
+
+```bash
+pytest
+```
+
+The project includes a ```pytest.ini``` configuration file.
+
+This configuration ensures :
+
+* Pytest automatically finds the ```tests/``` folder.
+* The ```src/``` directory is added to the python path.
+* Modules can be imported.
 
 ## Demo
 

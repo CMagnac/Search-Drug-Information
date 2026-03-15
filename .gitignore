@@ -1,3 +1,8 @@
-/DRAFTS
-/env
-__pycache__
+drafts/
+env/
+__pycache__/
+.pytest_cache/
+build/
+dist/
+*.egg-info/
+.eggs/
