@@ -71,13 +71,14 @@ class StemAnalyzer:
         """
         Analyze a drug name and return matching WHO stems.
         """
+        # Ensures case-insensitive detection.
         drug_name = drug_name.lower()
         matches = []
-
+        # iterate through stems
         for stem, description in self.stem_database.get_all_stems().items():
 
             clean_stem = stem.strip("-")
-
+            # detect stem type
             is_prefix = stem.endswith("-") and not stem.startswith("-")
             is_suffix = stem.startswith("-") and not stem.endswith("-")
             is_infix = stem.startswith("-") and stem.endswith("-")

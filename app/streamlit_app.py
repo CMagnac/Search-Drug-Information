@@ -23,63 +23,113 @@ from inn_analyzer.pubchem_service import PubChemClient
 validator = DrugNameValidator("./data/common-stems.json")
 pubchem = PubChemClient()
 
-# Streamlit configuration
-st.set_page_config(
-    page_title="Drug INN Analyzer",
-    layout="wide"
-)
+def analyze_drug(drug_name: str):
+    """
+    Perform stem validation and PubChem retrieval.
+    """
+    result = validator.validate(drug_name)
+    pharmacology = pubchem.get_pharmacology(drug_name)
 
-st.title("Drug INN Analyzer")
+    return result, pharmacology
 
-st.write(
-    "Validate WHO INN stems and retrieve pharmacology information from PubChem."
-)
 
-# Creates an input box with default value amoxicillin.
-drug_name = st.text_input("Enter drug INN", "amoxicillin")
+def main():
+    # Streamlit configuration
+    st.set_page_config(
+        page_title="Drug INN Analyzer",
+        layout="wide"
+    )
+    st.title("Drug INN Analyzer")
+    st.write("Validate WHO INN stems and retrieve pharmacology information from PubChem.")
+    # Creates an input box with default value amoxicillin.
+    drug_name = st.text_input("Enter drug INN", "amoxicillin")
+    # The analysis runs only when the button is pressed.
+    if st.button("Analyze"):
+        # Prevents empty input.
+        if not drug_name.strip():
+            st.warning("Please enter a drug name.")
+            return
 
-# Main action : the analysis runs only when the button is pressed.
-if st.button("Analyze"):
-    # Prevents empty input.
-    if drug_name.strip() == "":
-        st.warning("Please enter a drug name.")
-
-    else:
-
+        result, data = analyze_drug(drug_name)
         st.subheader("WHO Stem Validation")
 
-        result = validator.validate(drug_name)
-
         if result.is_valid:
-
             st.success("Valid INN stem detected")
 
             for match in result.matches:
-
                 st.write(f"Stem: **{match.stem}**")
                 st.write(match.description)
 
         else:
-
             st.error("No WHO stem detected")
-
-
         st.subheader("PubChem Pharmacology")
+        st.write(f"PubChem CID: **{data['cid']}**")
+
+        for section in data["sections"]:
+            with st.expander(section["section"]):
+                st.write(section["text"])
 
 
-        try:
-            # PubChem retrieval
-            data = pubchem.get_pharmacology(drug_name)
+if __name__ == "__main__":
+    main()
 
-            st.write(f"PubChem CID: **{data['cid']}**")
+# Streamlit configuration
+# st.set_page_config(
+#     page_title="Drug INN Analyzer",
+#     layout="wide"
+# )
 
-            for section in data["sections"]:
+# st.title("Drug INN Analyzer")
 
-                with st.expander(section["section"]):
+# st.write(
+#     "Validate WHO INN stems and retrieve pharmacology information from PubChem."
+# )
 
-                    st.write(section["text"])
+# # Creates an input box with default value amoxicillin.
+# drug_name = st.text_input("Enter drug INN", "amoxicillin")
 
-        except Exception as e:
+# Main action : the analysis runs only when the button is pressed.
+# if st.button("Analyze"):
+    # Prevents empty input.
+    # if drug_name.strip() == "":
+    #     st.warning("Please enter a drug name.")
 
-            st.warning("Unable to retrieve PubChem pharmacology data.")
-            st.exception(e)
+    # else:
+
+    #     st.subheader("WHO Stem Validation")
+
+    #     result = validator.validate(drug_name)
+
+    #     if result.is_valid:
+
+    #         st.success("Valid INN stem detected")
+
+    #         for match in result.matches:
+
+    #             st.write(f"Stem: **{match.stem}**")
+    #             st.write(match.description)
+
+    #     else:
+
+        #     st.error("No WHO stem detected")
+
+
+        # st.subheader("PubChem Pharmacology")
+
+
+        # try:
+        #     # PubChem retrieval
+        #     data = pubchem.get_pharmacology(drug_name)
+
+        #     st.write(f"PubChem CID: **{data['cid']}**")
+
+        #     for section in data["sections"]:
+
+        #         with st.expander(section["section"]):
+
+        #             st.write(section["text"])
+
+        # except Exception as e:
+
+        #     st.warning("Unable to retrieve PubChem pharmacology data.")
+        #     st.exception(e)
