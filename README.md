@@ -54,7 +54,6 @@ The INN Table is an Excel spreadsheet that contains the HS classification of INN
 ## Installation and Usage
 
 ```bash
-streamlit run app.py
 git clone https://github.com/CMagnac/Search-Drug-Information.git
 cd Search-Drug-Information
 python -m venv env
