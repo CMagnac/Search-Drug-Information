@@ -8,18 +8,31 @@ from inn_analyzer.pubchem_service import PubChemClient
 
 
 def test_get_cid(monkeypatch):
-    def mock_get(*args, **kwargs):
+    """Test that get_cid returns the expected CID using a mocked API response."""
+
+    def mock_get(_args, _kwargs):
+        """Mock requests.get returning a fake PubChem response."""
+
         class MockResponse:
-            def raise_for_status(self): pass
+            """Mock response object mimicking requests.Response."""
+
+            def raise_for_status(self):
+                """Simulate successful HTTP response."""
+                return None
+
             def json(self):
+                """Return a fake JSON payload."""
                 return {"IdentifierList": {"CID": [12345]}}
+
         return MockResponse()
+
     monkeypatch.setattr("requests.get", mock_get)
     client = PubChemClient()
     cid = client.get_cid("amoxicillin")
     assert cid == 12345
 
 def test_extract_sections():
+    """Test extraction of sections from a simulated PubChem response."""
     client = PubChemClient()
     fake_data = {
         "Record": {
@@ -43,7 +56,7 @@ def test_extract_sections():
     assert sections[0]["section"] == "Mechanism"
 
 def test_get_pharmacology_mock(monkeypatch):
-
+    """Test pharmacology retrieval using mocked internal client methods."""
     client = PubChemClient()
     monkeypatch.setattr(client, "get_cid", lambda x: 123)
     monkeypatch.setattr(
